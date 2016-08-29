@@ -69,7 +69,7 @@ as example: changing font sizes
 
 PLEASE NOTE that SGL.h contains this line:
 
-#define SGL_DEFAULT_FONT (FONT_TMSBLD_24)
+\#define SGL_DEFAULT_FONT (FONT_TMSBLD_24)
 
 which parameter must be modified to one of your chosen font's name.
 The list of all generated fonts is in fontLib.h
