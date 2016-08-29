@@ -52,7 +52,7 @@ fontLib.c / fontLib.h
 
 
 
-##################################################################################
+******************************************************************************
 
 Generating fontLib.c / fontLib.h
 
@@ -73,7 +73,3 @@ PLEASE NOTE that SGL.h contains this line:
 
 which parameter must be modified to one of your chosen font's name.
 The list of all generated fonts is in fontLib.h
-
-##################################################################################
-
-
