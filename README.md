@@ -1,7 +1,8 @@
 ******************************************************************************
 Copyright (c) 2016 - Fabio Angeletti
 e-mail: fabio.angeletti89@gmail.com
-All rights reserved.
+
+I'm not the owner of the whole code. See individual files for more info.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
