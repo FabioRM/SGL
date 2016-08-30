@@ -28,6 +28,21 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ******************************************************************************/
 
+/*****************************************************************************
+DO NOT CHANGE the color type (uint32_t) on the function call.
+If really needed to, change the color handling inside the function
+
+example (on monochrome LCD):
+
+		void SGL_LL_SetPoint(uint32_t x, uint32_t y, uint32_t color)
+		{
+			if(color)
+				YOURLCD_draw(1);
+			else
+				YOURLCD_draw(0);
+		}
+******************************************************************************/
+
 #include "SGL_LL.h"
 
 void SGL_LL_Init(void)
@@ -35,17 +50,12 @@ void SGL_LL_Init(void)
 
 }
 
-void SGL_LL_Clear(uint32_t Color)
+void SGL_LL_Clear(uint32_t color)
 {
-	BSP_LCD_Clear(Color);
+	BSP_LCD_Clear(color);
 }
 
-uint32_t SGL_LL_GetPoint(uint32_t Xpos, uint32_t Ypos)
+void SGL_LL_SetPoint(uint32_t x, uint32_t y, uint32_t color)
 {
-	return BSP_LCD_ReadPixel(Xpos, Ypos);
-}
-
-void SGL_LL_SetPoint(uint32_t Xpos, uint32_t Ypos, uint32_t color)
-{
-	BSP_LCD_DrawPixel(Xpos, Ypos, color);
+	BSP_LCD_DrawPixel(x, y, color);
 }

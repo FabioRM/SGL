@@ -33,15 +33,27 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "main.h"
 
-/* Display dependent functions -------------------------------------------------------*/
+/* Display dependent functions ----------------------------------------------*/
 
-	// controller initialization
+/**
+ * @brief      Initializes the underlying hardware required for operation
+ */
 void SGL_LL_Init(void);
-	// fills screen with chosen color
-void SGL_LL_Clear(uint32_t Color);	
-	// return the color of requested point
-uint32_t SGL_LL_GetPoint(uint32_t Xpos, uint32_t Ypos);
-	// places a point with selected color
-void SGL_LL_SetPoint(uint32_t Xpos, uint32_t Ypos, uint32_t color);
+
+/**
+ * @brief      Fills the screen with the given color
+ *
+ * @param[in]  color  the filling color
+ */
+void SGL_LL_Clear(uint32_t color);	
+
+/**
+ * @brief      Draw a point at position (x, y) with color color
+ *
+ * @param[in]  x      The x position
+ * @param[in]  y      The y position
+ * @param[in]  color  The color
+ */
+void SGL_LL_SetPoint(uint32_t x, uint32_t y, uint32_t color);
 
 #endif
