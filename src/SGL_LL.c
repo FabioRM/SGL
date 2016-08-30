@@ -49,19 +49,3 @@ void SGL_LL_SetPoint(uint32_t Xpos, uint32_t Ypos, uint32_t color)
 {
 	BSP_LCD_DrawPixel(Xpos, Ypos, color);
 }
-
-void SGL_LL_Backlight(uint32_t val)
-{
-
-}
-
-uint32_t SGL_LL_GetLcdXSize(void)
-{
-	return BSP_LCD_GetXSize();
-}
-
-uint32_t SGL_LL_GetLcdYSize(void)
-{
-	return BSP_LCD_GetYSize();
-}
-

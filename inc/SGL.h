@@ -33,8 +33,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  Part of this code is an adaptation from the souce code written by
  Michael Margolis - https://code.google.com/p/glcd-arduino/
 
- Part of this code is an adaptation from souce code found on 
+ Part of this code is an adaptation from the souce code found on 
  AvrFreaks - http://www.avrfreaks.net/sites/default/files/triangles.c
+
+ Part of this code is an adaptation from the souce code provided by the user
+ "colinday" on stackoverflow (Midpoint circle algorithm for filled circles)
 
 ******************************************************************************/
  
@@ -80,52 +83,211 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SGL_COLOR_WHITE         		(0xFFFFFFFF)
 #define SGL_COLOR_BLACK         		(0xFF000000)
 
-#define SGL_DEFAULT_FONT						(FONT_TMSBLD_24)
+#define SGL_DEFAULT_FONT				(FONT_TMSBLD_24)
 
 /* Exported Functions --------------------------------------------------------*/
-void SGL_Init(void);
+
+/**
+ * @brief      Initilize the library
+ *
+ * @param[in]  width   The screen width
+ * @param[in]  height  The screen height
+ */
+void SGL_Init(uint32_t width, uint32_t height);
+
+/**
+ * @brief      Changes the Font
+ *
+ * @param[in]  font  The font to use
+ */
 void SGL_SetFont(FONT_t font);
+
+/**
+ * @brief      Changes the drawing color
+ *
+ * @param[in]  color  The color
+ */
 void SGL_SetFrontColor(uint32_t color);
+
+/**
+ * @brief      Changes the background color
+ *
+ * @param[in]  color  The color
+ */
 void SGL_SetBackColor(uint32_t color);
 
-// Clear screen
+/**
+ * @brief      Clears the whole screen with the background color
+ */
 void SGL_ClearScreen(void);
-// writes a character with background
-void SGL_PutChar(uint32_t Xpos, uint32_t Ypos, uint8_t ASCII);
-// writes a character without background using default font
-void SGL_CleanPutChar(uint32_t Xpos, uint32_t Ypos, uint8_t ASCII);
-// writes a string with background using default font
-void SGL_Text(uint32_t Xpos, uint32_t Ypos, uint8_t *str);
-// writes a string without background using default font
-void SGL_CleanText(uint32_t Xpos, uint32_t Ypos, uint8_t *str);
 
-// draws a picture saved as array
-void SGL_DrawPicture(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const uint32_t *pic);
-// draws a picture saved as 2x8bit array
-void SGL_DrawPicture8bit(uint32_t x, uint32_t y, uint32_t w, uint32_t h, const uint8_t *pic);
+/**
+ * @brief      Draws a point to the given position, if the position lies outside
+ *             the screen area, it does nothing
+ *
+ * @param[in]  x     The x position
+ * @param[in]  y     The y position
+ */
+void SGL_DrawPoint(int32_t x, int32_t y);
 
-// draws a point at x, y
-void SGL_DrawPoint(uint32_t x, uint32_t y);
-// draws a line starting at x0,y0 and ending at x1,y1
-void SGL_DrawLine(uint32_t x0, uint32_t y0, uint32_t x1, uint32_t y1);
-// draws a circle with center x0,y0 radius r
+/**
+ * @brief      Draws a line from position (x0, y0) to position (x1, y1)
+ *
+ * @param[in]  x0    The position x0
+ * @param[in]  y0    The position y0
+ * @param[in]  x1    The position x1
+ * @param[in]  y1    The position y1
+ */
+void SGL_DrawLine(int32_t x0, int32_t y0, int32_t x1, int32_t y1);
+
+/**
+ * @brief      Puts a single char to the given position
+ *
+ * @param[in]  xPos   The x position
+ * @param[in]  yPos   The y position
+ * @param[in]  ASCII  The character to print
+ */
+void SGL_PutChar(uint32_t xPos, uint32_t yPos, uint8_t ASCII);
+
+/**
+ * @brief      Write a null-terminated string starting from the given position
+ *
+ * @param[in]  xPos  The x position
+ * @param[in]  yPos  The y position
+ * @param      str   The string to write
+ */
+void SGL_Text(uint32_t xPos, uint32_t yPos, uint8_t *str);
+
+/**
+ * @brief      Puts a single char to the given position with background
+ *
+ * @param[in]  xPos   The x position
+ * @param[in]  yPos   The y position
+ * @param[in]  ASCII  The character to print
+ */
+void SGL_PutCharBg(uint32_t xPos, uint32_t yPos, uint8_t ASCII);
+
+/**
+ * @brief      Write a null-terminated string starting from the given position
+ *             with background
+ *
+ * @param[in]  xPos  The x position
+ * @param[in]  yPos  The y position
+ * @param      str   The string to write
+ */
+void SGL_TextBg(uint32_t xPos, uint32_t yPos, uint8_t *str);
+
+/**
+ * @brief      Draws a circle centered at position (x0, y0) with radius of r
+ *             pixels
+ *
+ * @param[in]  x0    The x0 position
+ * @param[in]  y0    The y0 position
+ * @param[in]  r     The radius of the circle in pixels
+ */
 void SGL_DrawCircle(uint32_t x0, uint32_t y0, uint32_t r);
-// draws a filled circle with center x0,y0 radius r
+
+/**
+ * @brief      Draws a filled circle centered at position (x0, y0) with radius r
+ *
+ * @param[in]  x0    The x0 position
+ * @param[in]  y0    The y0 position
+ * @param[in]  r     The radius of the circle
+ */
 void SGL_FillCircle(uint32_t x0, uint32_t y0, uint32_t r);
-// draws a rectangle starting at x,y with width w and height h
+
+/**
+ * @brief      Draws a rectangle starting from position (x, y) with width w and
+ *             height h
+ *
+ * @param[in]  x     The x position
+ * @param[in]  y     The y position
+ * @param[in]  w     The width of the rectangle
+ * @param[in]  h     The height of the rectangle
+ */
 void SGL_DrawRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-// draws a filled rectangle starting at x,y with width w and height h
+
+/**
+ * @brief      Draws a filled rectangle starting from position (x, y) with width
+ *             w and height h
+ *
+ * @param[in]  x     The x position
+ * @param[in]  y     The y position
+ * @param[in]  w     The width of the rectangle
+ * @param[in]  h     The height of the rectangle
+ */
 void SGL_FillRect(uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-// draws a rounded rectangle starting at x,y with width w and height h with rounded radius r
+
+/**
+ * @brief      Draws a rounded rectangle starting from position (x, y) with
+ *             width w, height h and corner radius r
+ *
+ * @param[in]  x     The x position
+ * @param[in]  y     The y position
+ * @param[in]  w     The width of the rectangle
+ * @param[in]  h     The height of the rectangle
+ * @param[in]  r     The corner radius r
+ */
 void SGL_DrawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r);
-// draws a filled and rounded rectangle starting at x,y with width w and height h with rounded radius r
+
+/**
+ * @brief      Draws a rounded and filled rectangle starting from position
+ *             (x, y) with width w, height h and corner radius r
+ *
+ * @param[in]  x     The x position
+ * @param[in]  y     The y position
+ * @param[in]  w     The width of the rectangle
+ * @param[in]  h     The height of the rectangle
+ * @param[in]  r     The corner radius r
+ */
 void SGL_FillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r);
-// draws a triangle with coordinates x0,y0 x1,y1 x2,y2
+
+/**
+ * @brief      Draws a triangle given three vertices (x0, y0), (x1, y1), (x2,
+ *             y2)
+ *
+ * @param[in]  x0    The position x0
+ * @param[in]  y0    The position y0
+ * @param[in]  x1    The position x1
+ * @param[in]  y1    The position y1
+ * @param[in]  x2    The position x2
+ * @param[in]  y2    The position y2
+ */
 void SGL_DrawTriangle(uint32_t x0, uint32_t y0, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2);
-// draws a filled triangle with coordinates x0,y0 x1,y1 x2,y2
-void SGL_FillTriangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3);
-// draws an ellipse centered in x0,y0 with vertical length rx and horizontal length ry
+
+/**
+ * @brief      Draws a filled triangle given three vertices (x0, y0), (x1, y1),
+ *             (x2, y2)
+ *
+ * @param[in]  x0    The position x0
+ * @param[in]  y0    The position y0
+ * @param[in]  x1    The position x1
+ * @param[in]  y1    The position y1
+ * @param[in]  x2    The position x2
+ * @param[in]  y2    The position y2
+ */
+void SGL_FillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2);
+
+/**
+ * @brief      Draws an ellipse given the center position (x, y), horizontal
+ *             radius rx and vertical radius ry
+ *
+ * @param[in]  x0    The position x0
+ * @param[in]  y0    The position y0
+ * @param[in]  rx    The horizontal radius
+ * @param[in]  ry    The vertical radius
+ */
 void SGL_DrawEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry);
-// draws a filled ellipse centered in x0,y0 with vertical length rx and horizontal length ry
+
+/**
+ * @brief      Draws a filled ellipse given the center position (x, y),
+ *             horizontal radius rx and vertical radius ry
+ *
+ * @param[in]  x0    The position x0
+ * @param[in]  y0    The position y0
+ * @param[in]  rx    The horizontal radius
+ * @param[in]  ry    The vertical radius
+ */
 void SGL_FillEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry);
+
 #endif

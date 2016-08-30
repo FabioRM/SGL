@@ -36,18 +36,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Display dependent functions -------------------------------------------------------*/
 
 	// controller initialization
-void 		SGL_LL_Init(void);
+void SGL_LL_Init(void);
 	// fills screen with chosen color
-void 		SGL_LL_Clear(uint32_t Color);	
+void SGL_LL_Clear(uint32_t Color);	
 	// return the color of requested point
-uint32_t 	SGL_LL_GetPoint(uint32_t Xpos, uint32_t Ypos);
+uint32_t SGL_LL_GetPoint(uint32_t Xpos, uint32_t Ypos);
 	// places a point with selected color
-void 		SGL_LL_SetPoint(uint32_t Xpos, uint32_t Ypos, uint32_t color);
-	// backlight ON/OFF
-void		SGL_LL_Backlight(uint32_t val);
-	// get LCD's X size
-uint32_t	SGL_LL_GetLcdXSize(void);
-	// get LCD's Y size
-uint32_t	SGL_LL_GetLcdYSize(void);
+void SGL_LL_SetPoint(uint32_t Xpos, uint32_t Ypos, uint32_t color);
 
 #endif
