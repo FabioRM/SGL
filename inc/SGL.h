@@ -290,4 +290,28 @@ void SGL_DrawEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry);
  */
 void SGL_FillEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry);
 
+/**
+ * @brief      Draw a polygon of p vertices within a circle of radius centered
+ *             in (x0, y0)
+ *
+ * @param[in]  x0    The midopoint position x0
+ * @param[in]  y0    The midopoint position y0
+ * @param[in]  r     The circle radius
+ * @param[in]  p     The number of polygon vertices
+ * @param[in]  d     The initial rotation of the polygon
+ */
+void SGL_DrawPolygonMidpoint(int16_t x0, int16_t y0, uint16_t r, uint16_t p, int16_t d);
+
+/**
+ * @brief      Draw a filled polygon of p vertices within a circle of radius
+ *             centered in (x0, y0)
+ *
+ * @param[in]  x0    The midopoint position x0
+ * @param[in]  y0    The midopoint position y0
+ * @param[in]  r     The circle radius
+ * @param[in]  p     The number of polygon vertices
+ * @param[in]  d     The initial rotation of the polygon
+ */
+void SGL_FillPolygonMidpoint(int16_t x0, int16_t y0, uint16_t r, uint16_t p, int16_t d);
+
 #endif

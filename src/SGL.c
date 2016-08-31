@@ -43,7 +43,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "SGL.h"
 
-/* Absolute value */
+#ifndef M_PI
+#define M_PI 3.1415926535
+#endif
+
+/* Helper macros -------------------------------------------------------------*/
+#define DEG2RAD(deg) (deg * M_PI / 180.0)
+#define RAD2DEG(rad) (rad * 180.0 / M_PI)
 #define ABS(x)   ((x) > 0 ? (x) : -(x))
 
 /* Private helper functions --------------------------------------------------*/
@@ -367,6 +373,8 @@ void SGL_FillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2
 	uint8_t changed2 = 0x00;
 	int16_t signx1, signx2, dx1, dy1, dx2, dy2;
 	uint32_t e1, e2;
+	uint32_t i, j;
+
 	// Sort vertices
 	if (y0 > y1) {
 		swap(&y0, &y1);
@@ -415,7 +423,7 @@ void SGL_FillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2
 		goto next;
 	e1 = dx1 >> 1;
 
-	for (uint32_t i = 0; i < dx1;) {
+	for (i = 0; i < dx1;) {
 		t1xp = 0;
 		t2xp = 0;
 		if (t1x < t2x) {
@@ -498,7 +506,7 @@ void SGL_FillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2
 
 	e1 = dx1 >> 1;
 
-	for (uint32_t i = 0; i <= dx1; i++) {
+	for(j = 0; j <= dx1; j++) {
 		t1xp = 0;
 		t2xp = 0;
 		if (t1x < t2x) {
@@ -509,7 +517,7 @@ void SGL_FillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2
 			maxx = t1x;
 		}
 		// process first line until y value is about to change
-		while (i < dx1) {
+		while (j < dx1) {
 			e1 += dy1;
 			while (e1 >= dx1) {
 				e1 -= dx1;
@@ -524,8 +532,8 @@ void SGL_FillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2
 				break;
 			else
 				t1x += signx1;
-			if (i < dx1)
-				i++;
+			if (j < dx1)
+				j++;
 		}
 		next3:
 		// process second line until y value is about to change
@@ -644,6 +652,46 @@ void SGL_FillEllipse(int16_t x0, int16_t y0, int16_t rx, int16_t ry)
 		s += rx2 * ((4 * y) + 6);
 	}
 
+}
+
+void SGL_DrawPolygonMidpoint(int16_t x0, int16_t y0, uint16_t r, uint16_t p, int16_t d)
+{
+	uint16_t index;
+	int16_t points[p][2];
+
+	if(p > 3)
+	{
+		for(index = 0; index < p; index++)
+		{
+			points[index][0] = x0 + cos(DEG2RAD(d) + index * (2 * 3.1415927 / p)) * r;
+			points[index][1] = y0 + sin(DEG2RAD(d) + index * (2 * 3.1415927 / p)) * r;
+		}
+
+		for(index = 0; index < (p - 1); index++)
+			SGL_DrawLine(points[index][0], points[index][1], points[index + 1][0], points[index + 1][1]);
+
+		SGL_DrawLine(points[p - 1][0], points[p - 1][1], points[0][0], points[0][1]);
+	}
+}
+
+void SGL_FillPolygonMidpoint(int16_t x0, int16_t y0, uint16_t r, uint16_t p, int16_t d)
+{
+	uint16_t index;
+	int16_t points[p][2];
+
+	if(p > 3)
+	{
+		for(index = 0; index < p; index++)
+		{
+			points[index][0] = x0 + cos(DEG2RAD(d) + index * (2 * 3.1415927 / p)) * r;
+			points[index][1] = y0 + sin(DEG2RAD(d) + index * (2 * 3.1415927 / p)) * r;
+		}
+
+		for(index = 0; index < (p - 2); index++)
+			SGL_FillTriangle(points[0][0], points[0][1], points[index][0], points[index][1], points[index + 1][0], points[index + 1][1]);
+		
+		SGL_FillTriangle(points[0][0], points[0][1], points[p - 1][0], points[p - 1][1], points[p - 2][0], points[p - 2][1]);
+	}
 }
 
 void SGL_DrawCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername)
