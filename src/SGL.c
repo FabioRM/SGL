@@ -659,7 +659,7 @@ void SGL_DrawPolygonMidpoint(int16_t x0, int16_t y0, uint16_t r, uint16_t p, int
 	uint16_t index;
 	int16_t points[p][2];
 
-	if(p > 3)
+	if(p > 2)
 	{
 		for(index = 0; index < p; index++)
 		{
@@ -679,7 +679,7 @@ void SGL_FillPolygonMidpoint(int16_t x0, int16_t y0, uint16_t r, uint16_t p, int
 	uint16_t index;
 	int16_t points[p][2];
 
-	if(p > 3)
+	if(p > 2)
 	{
 		for(index = 0; index < p; index++)
 		{
