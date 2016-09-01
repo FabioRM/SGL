@@ -1,7 +1,7 @@
 #SGL - Simple Graphic Library
 
 
-A low-level agnostic library that provides basic graphical functionalities to work with graphical displays.
+A low-level agnostic library that provides basic graphic functionalities to work with graphic displays.
 
 
 It consists of only three parts:
