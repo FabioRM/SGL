@@ -1,4 +1,4 @@
-#SGL - Simple Graphical Library
+#SGL - Simple Graphic Library
 
 
 A low-level agnostic library that provides basic graphical functionalities to work with graphical displays.
