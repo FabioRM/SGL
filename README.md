@@ -1,7 +1,7 @@
-#SGL - Simple Graphic Library
+#SGL - Simple Graphical Library
 
 
-A low-level agnostic library that provides basic graphic functionalities to work with graphic displays.
+A low-level agnostic library that provides basic graphical functionalities to work with graphical displays. It provides primitives to draw circles, rectangles, rounded rectangles, n-edges polygons, texts, lines and more.
 
 
 It consists of only three parts:
@@ -14,7 +14,7 @@ It consists of only three parts:
 
 SGL.c / SGL.h
 
-		provides functions to draw circles, triangles, rects, ellipses, points and text
+		implements functions to draw circles, triangles, rects, ellipses, points and text
 		the header is commented and the names of the variables should be easily readable
 
 SGL_LL.c / SGL_LL.h
