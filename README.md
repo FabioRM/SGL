@@ -28,6 +28,7 @@ fontLib.c / fontLib.h
 		these files are generated through the python script "generateFontsLib.py".
 
 
+Demo on YouTube: https://www.youtube.com/watch?v=9QzmGL1dB9o
 
 ******************************************************************************
 
